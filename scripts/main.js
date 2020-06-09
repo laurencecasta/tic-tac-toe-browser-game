@@ -1,5 +1,4 @@
 // Create gameboard object
-
 const gameBoard = (() => {
   let board = [];
   for (let i = 0; i < 3; i++) {
@@ -13,4 +12,11 @@ const gameBoard = (() => {
   };
 })();
 
-console.log(gameBoard.board);
+// Create factory function for players
+const Player = (name) => {
+  const getName = () => name;
+  return {getName};
+};
+
+const playerOne = Player('john');
+console.log(playerOne.getName());
