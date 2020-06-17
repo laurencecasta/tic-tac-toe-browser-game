@@ -1,6 +1,35 @@
 body {
-  font: 100% Helvetica, sans-serif;
+  font-family: "Inter", sans-serif;
   color: #333;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.boardContainer {
+  display: flex;
+  justify-content: center;
+}
+
+table td {
+  text-align: center;
+  vertical-align: center;
+}
+
+table {
+  border-collapse: collapse;
+  box-shadow: 4px 5px 26px -6px rgba(0, 0, 0, 0.75);
+  background: black;
+  color: whitesmoke;
+}
+table td {
+  font-size: 50px;
+  border: 2px solid white;
+  margin: 0px;
+  width: 65px;
+  height: 65px;
+  position: relative;
 }
 
 /*# sourceMappingURL=main.css.map */

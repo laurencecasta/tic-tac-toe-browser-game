@@ -1,7 +1,32 @@
-$font-stack:    Helvetica, sans-serif;
-$primary-color: #333;
+@use 'body';
+$standard-border: 2px solid white;
 
-body {
-  font: 100% $font-stack;
-  color: $primary-color;
+%center-horizontal {
+  display: flex;
+  justify-content: center;
+}
+
+%center-text {
+  text-align: center;
+  vertical-align: center;
+}
+
+.boardContainer {
+  @extend %center-horizontal;
+}
+
+table{
+  border-collapse: collapse;
+  box-shadow: 4px 5px 26px -6px rgba(0,0,0,0.75);
+  background: black;
+  color: whitesmoke;
+  td {
+    @extend %center-text;
+    font-size: 50px;
+    border: $standard-border;
+    margin: 0px;
+    width: 65px;
+    height: 65px;
+    position: relative;
+  }
 }

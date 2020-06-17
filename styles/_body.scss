@@ -1,0 +1,11 @@
+$font-stack: 'Inter', sans-serif;
+$primary-color: #333;
+
+body {
+  font-family: $font-stack;
+  color: $primary-color;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

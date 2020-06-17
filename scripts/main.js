@@ -18,5 +18,23 @@ const Player = (name) => {
   return {getName};
 };
 
-const playerOne = Player('john');
-console.log(playerOne.getName());
+// Create display controller to render gameBoard
+const game = ((boardAr) => {
+  // Create DOM elements from gameBoard array
+  let container = document.querySelector('.boardContainer') // Add reference to gameBoard container node
+  let board = document.createElement('table'); // Create table element for board
+  let count = 0;
+  boardAr.forEach(row => {
+    let gameBoardRow = document.createElement('tr'); // Create table row DOM node
+    row.forEach(place => { // Create a data cell for each spot
+      let spot = document.createElement('td');
+      spot.textContent = (count % 2 == 0) ? 'X' : 'O'; // Create placeholders
+      gameBoardRow.appendChild(spot); // Append spot to row
+      count++;
+    });
+    board.appendChild(gameBoardRow); // Append row to table
+  });
+  container.appendChild(board); // Append table to container
+})(gameBoard.board);
+
+// Test gameBoard display
