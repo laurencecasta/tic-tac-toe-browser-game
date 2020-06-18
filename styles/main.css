@@ -28,8 +28,11 @@ table td {
   border: 2px solid white;
   margin: 0px;
   width: 65px;
-  height: 65px;
+  height: 69px;
   position: relative;
+}
+table td:hover {
+  background: #1f1f1f;
 }
 
 /*# sourceMappingURL=main.css.map */

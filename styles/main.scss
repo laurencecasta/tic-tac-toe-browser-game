@@ -26,7 +26,10 @@ table{
     border: $standard-border;
     margin: 0px;
     width: 65px;
-    height: 65px;
+    height: 69px;
     position: relative;
+    &:hover {
+      background: rgb(31, 31, 31);
+    }
   }
 }
