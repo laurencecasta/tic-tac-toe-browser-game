@@ -24,34 +24,47 @@ const Player = (name) => {
   };
 };
 
-// Manually create players with the factory function
-
 // Create helper factory function to determine winner
 const Winner = (board, marker) => {
-  const winningCases = () => {
-    /* let newAr = [];
-    let rowIndex = 0;
-    board.forEach(row => { // Create new array with all other markers removed
-      newAr.push([]);
-      row.forEach(spot => {
-        if (spot == marker) {
-          newAr[rowIndex].push(marker);
-        } else {
-          newAr[rowIndex].push('');
-        }
-      });
-      rowIndex++;
-    }); */
-
-
-    let newAr = board.map(row => {
+  const markerAr = () => {
+    let newAr = board.map(row => { // Create new array with only the marker
       return row.map(place => (place == marker) ? place : '');
     });
     return newAr;
   }
+  const winningCase = () => { // Create boolean comparing markerAr to winning case
+    // Horizontal rows
+    for (let i = 0; i < markerAr().length; i++) {
+      if (JSON.stringify(markerAr()[i]) === JSON.stringify([marker, marker, marker])) {return true;}
+    }
 
+    // Vertical rows
+    for (let i = 0; i < markerAr().length; i++) {
+      let vertAr = [];
+      for (let j = 0; j < markerAr().length; j++) {
+        vertAr.push(markerAr()[j][i])
+      }
+      if (JSON.stringify(vertAr) === JSON.stringify([marker, marker, marker])) {return true;}
+    }
+
+    // Diagonals
+    let diag = [];
+    for (let i = 0; i < markerAr().length; i++) {
+      diag.push(markerAr()[i][i]);
+      if (JSON.stringify(diag) === JSON.stringify([marker, marker, marker])) {return true;}
+    }
+
+    let revDiag = [];
+    for (let i = 0; i < markerAr().length; i++) {
+      revDiag.push(markerAr()[i][markerAr().length - 1 - i]);
+      if (JSON.stringify(revDiag) === JSON.stringify([marker, marker, marker])) {return true;}
+    }
+
+    return false;
+  }
   return {
-    winningCases,
+    markerAr,
+    winningCase,
   }
 }
 
@@ -60,6 +73,8 @@ const game = ((boardAr) => {
   let playerCreated = false // Create boolean determining if any players are created
   let playerOneTurn = true; // Create boolean determining which player's turn it is
   let playerTwoTurn = false;
+  let gameOver = false; // Create boolean determining if game is over
+  let spotsFilled = 0;// Create counter for spots filled
   
   // Create DOM elements from gameBoard array
   let container = document.querySelector('.boardContainer') // Add reference to gameBoard container node
@@ -76,11 +91,26 @@ const game = ((boardAr) => {
       gameBoardRow.appendChild(spot); // Append spot to row
 
       spot.addEventListener('click', (e) => { // Add event listener for each spot tied to the data attribute
-        if (spot.textContent) {return;}
+        if (spot.textContent || gameOver) {return;}
         spot.textContent = (playerOneTurn) ? 'X' : 'O'; // Add content on click
         row[spot.getAttribute('data-index')] = spot.textContent; // change data in array after adding content
         console.log(boardAr); // log array to console to test
         [playerOneTurn, playerTwoTurn] = [playerTwoTurn, playerOneTurn]; // Switch players' turns
+
+        spotsFilled++;
+        console.log(spotsFilled);
+
+        setTimeout(() => {
+          if (Winner(boardAr, 'X').winningCase()) { // Check for winner or tie
+            alert('player 1 wins');
+            gameOver = true;
+          } else if (Winner(boardAr, 'O').winningCase()) {
+            alert('player 2 wins');
+            gameOver = true;
+          } else if (spotsFilled === 9) {
+            alert('It was a tie!');
+          }
+        }, 10);
       });
 
       placeIndex++;
