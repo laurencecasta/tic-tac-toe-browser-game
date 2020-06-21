@@ -1,5 +1,6 @@
 @use 'body';
 $standard-border: 2px solid white;
+$font-stack: 'Inter', sans-serif;
 
 %center-horizontal {
   display: flex;
@@ -11,13 +12,96 @@ $standard-border: 2px solid white;
   vertical-align: center;
 }
 
+h1 {
+  text-align: center;
+  font-size: 45px;
+}
+
+form {
+  text-align: center;
+  font-size: 20px;
+  ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0px;
+    li {
+      margin: 20px;
+      label {
+        margin-right: 10px;
+      }
+      #pOneLabel {
+        color: rgb(202, 97, 97);
+      }
+      #pTwoLabel {
+        color: rgb(117, 117, 223);
+      }
+      input[type='text'] {
+        font-family: $font-stack;
+        font-size: 17px;
+        background: black;
+        border: 2px solid black;
+        border-radius: 5px;
+        padding: 5px;
+        color: whitesmoke;
+      }
+      input[type='text']:focus {
+        outline: none;
+        border: none;
+        background: black;
+      }
+      
+      input[type='text']:active {
+        border: none;
+        background: black;
+      }
+      #playerOneInput:hover {
+        border: 2px solid rgb(202, 97, 97);
+      }
+      #playerOneInput:focus {
+        border: 2px solid rgb(202, 97, 97);
+      }
+      #playerTwoInput:hover {
+        border: 2px solid rgb(117, 117, 223);
+      }
+      #playerTwoInput:focus {
+        border: 2px solid rgb(117, 117, 223);
+      }
+    }
+  }
+  button {
+    font-family: $font-stack;
+    font-size: 20px;
+    border: 0;
+    background: rgb(100, 100, 100);
+    color: rgb(223, 223, 117);
+    padding: 10px;
+    border-radius: 5px;
+    &:focus {
+      outline: none;
+    }
+    &:active {
+      border: none;
+    }
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.1);
+      transition-duration: 0.2s;
+    }
+  }
+}
+
+h2 {
+  text-align: center;
+}
+
 .boardContainer {
   @extend %center-horizontal;
 }
 
 table{
   border-collapse: collapse;
-  box-shadow: 4px 5px 26px -6px rgba(0,0,0,0.75);
+  box-shadow: 4px 5px 26px -6px rgba(36, 35, 35, 0.75);
   background: black;
   color: whitesmoke;
   td {
@@ -30,6 +114,12 @@ table{
     position: relative;
     &:hover {
       background: rgb(31, 31, 31);
+    }
+    &.cross {
+      color: rgb(202, 97, 97);
+    }
+    &.naught {
+      color: rgb(117, 117, 223);
     }
   }
 }

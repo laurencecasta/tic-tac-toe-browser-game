@@ -17,9 +17,91 @@ table td {
   vertical-align: center;
 }
 
+h1 {
+  text-align: center;
+  font-size: 45px;
+}
+
+form {
+  text-align: center;
+  font-size: 20px;
+}
+form ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0px;
+}
+form ul li {
+  margin: 20px;
+}
+form ul li label {
+  margin-right: 10px;
+}
+form ul li #pOneLabel {
+  color: #ca6161;
+}
+form ul li #pTwoLabel {
+  color: #7575df;
+}
+form ul li input[type=text] {
+  font-family: "Inter", sans-serif;
+  font-size: 17px;
+  background: black;
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 5px;
+  color: whitesmoke;
+}
+form ul li input[type=text]:focus {
+  outline: none;
+  border: none;
+  background: black;
+}
+form ul li input[type=text]:active {
+  border: none;
+  background: black;
+}
+form ul li #playerOneInput:hover {
+  border: 2px solid #ca6161;
+}
+form ul li #playerOneInput:focus {
+  border: 2px solid #ca6161;
+}
+form ul li #playerTwoInput:hover {
+  border: 2px solid #7575df;
+}
+form ul li #playerTwoInput:focus {
+  border: 2px solid #7575df;
+}
+form button {
+  font-family: "Inter", sans-serif;
+  font-size: 20px;
+  border: 0;
+  background: #646464;
+  color: #dfdf75;
+  padding: 10px;
+  border-radius: 5px;
+}
+form button:focus {
+  outline: none;
+}
+form button:active {
+  border: none;
+}
+form button:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+  transition-duration: 0.2s;
+}
+
+h2 {
+  text-align: center;
+}
+
 table {
   border-collapse: collapse;
-  box-shadow: 4px 5px 26px -6px rgba(0, 0, 0, 0.75);
+  box-shadow: 4px 5px 26px -6px rgba(36, 35, 35, 0.75);
   background: black;
   color: whitesmoke;
 }
@@ -33,6 +115,12 @@ table td {
 }
 table td:hover {
   background: #1f1f1f;
+}
+table td.cross {
+  color: #ca6161;
+}
+table td.naught {
+  color: #7575df;
 }
 
 /*# sourceMappingURL=main.css.map */

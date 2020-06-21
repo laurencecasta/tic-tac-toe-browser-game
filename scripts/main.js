@@ -94,6 +94,7 @@ const game = ((boardAr) => {
         if (spot.textContent || gameOver) {return;}
         spot.textContent = (playerOneTurn) ? 'X' : 'O'; // Add content on click
         row[spot.getAttribute('data-index')] = spot.textContent; // change data in array after adding content
+        spot.classList.toggle((playerOneTurn) ? 'cross' : 'naught');
         console.log(boardAr); // log array to console to test
         [playerOneTurn, playerTwoTurn] = [playerTwoTurn, playerOneTurn]; // Switch players' turns
 
