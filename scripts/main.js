@@ -13,30 +13,21 @@ const gameBoard = (() => {
 })();
 
 // Create form object
-const playerForm = ((board, gameOver) => {
+const playerForm = (() => {
   const startStop = document.forms['startStop'];// Retrieve form
   let mainBtn = document.getElementById('submitNames'); // Retrieve button
   let resetBtn = document.getElementById('resetContainer')// Retrieve reset button
-  let spotsFilled = 0;
-  let playerOne;
-  let playerTwo;
   startStop.addEventListener('submit', (e) => { // Create event listener for submit
     e.preventDefault(); // Prevent automatic refresh
     e.target.toggleAttribute('hidden'); // hide form
-    playerOne = Player(startStop.querySelector('input[id="playerOneInput"]').value); // create player object with name input
-    playerTwo = Player(startStop.querySelector('input[id="playerOneInput"]').value);
     resetBtn.toggleAttribute('hidden'); // Reveal reset button
   });
-})(gameBoard.board, gameBoard.gameOver);
+})();
 
 // Create factory function for players
 const Player = (name) => {
-  const marker  = () => (game.playerCreated) ? 'O': 'X'; // Add property indicating player's marker (X vs O)
-  const number = () => (game.playerCreated) ? 2 : 1;
   return {
     name,
-    marker,
-    number,
   };
 };
 
@@ -79,7 +70,6 @@ const Winner = (board, marker) => {
     return false;
   }
   return {
-    markerAr,
     winningCase,
   }
 }
@@ -125,16 +115,16 @@ const game = ((boardAr, form) => {
 
         setTimeout(() => {
           if (Winner(boardAr, 'X').winningCase()) { // Check for winner or tie
-            let playerOne = document.querySelector('input[id="playerOneInput"]').value || 
-                            document.querySelector('input[id="playerOneInput"]').placeholder;
-            result.textContent = `${playerOne} wins.`; // Set text content to player one victory
+            let playerOne = Player(document.querySelector('input[id="playerOneInput"]').value || 
+                            document.querySelector('input[id="playerOneInput"]').placeholder);
+            result.textContent = `${playerOne.name} wins.`; // Set text content to player one victory
             result.classList.toggle('pOneResult');
             result.toggleAttribute('hidden');
             gameOver = true;
           } else if (Winner(boardAr, 'O').winningCase()) {
-            let playerTwo = document.querySelector('input[id="playerTwoInput"]').value || 
-                            document.querySelector('input[id="playerTwoInput"]').placeholder;
-            result.textContent = `${playerTwo} wins.`; // Set text content to player one victory
+            let playerTwo = Player(document.querySelector('input[id="playerTwoInput"]').value || 
+                            document.querySelector('input[id="playerTwoInput"]').placeholder);
+            result.textContent = `${playerTwo.name} wins.`; // Set text content to player one victory
             result.classList.toggle('pTwoResult');
             result.toggleAttribute('hidden');
             gameOver = true;
