@@ -123,4 +123,45 @@ table td.naught {
   color: #7575df;
 }
 
+#resetContainer {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+}
+#resetContainer[hidden] {
+  display: none;
+}
+#resetContainer .resetGame {
+  font-family: "Inter", sans-serif;
+  font-size: 20px;
+  border: 0;
+  background: #646464;
+  color: #dfdf75;
+  padding: 10px;
+  border-radius: 5px;
+}
+#resetContainer .resetGame:focus {
+  outline: none;
+}
+#resetContainer .resetGame:active {
+  border: none;
+}
+#resetContainer .resetGame:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+  transition-duration: 0.2s;
+}
+
+h3 {
+  text-align: center;
+}
+
+.pOneResult {
+  color: #ca6161;
+}
+
+.pTwoResult {
+  color: #7575df;
+}
+
 /*# sourceMappingURL=main.css.map */

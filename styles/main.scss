@@ -123,3 +123,43 @@ table{
     }
   }
 }
+
+#resetContainer {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+  &[hidden]{
+    display: none;
+  }
+  .resetGame {
+    font-family: $font-stack;
+    font-size: 20px;
+    border: 0;
+    background: rgb(100, 100, 100);
+    color: rgb(223, 223, 117);
+    padding: 10px;
+    border-radius: 5px;
+    &:focus {
+      outline: none;
+    }
+    &:active {
+      border: none;
+    }
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.1);
+      transition-duration: 0.2s;
+    }
+  }
+}
+
+h3 {
+  text-align: center;
+}
+
+.pOneResult {
+  color: rgb(202, 97, 97);
+}
+.pTwoResult {
+  color: rgb(117, 117, 223);
+}

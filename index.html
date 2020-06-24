@@ -9,7 +9,7 @@
 </head>
 <body>
   <h1>TIC-TAC-TOE</h1>
-  <form>
+  <form id="startStop">
     <ul>
       <li>
         <label for="playerOneInput" id="pOneLabel">player one name:</label>
@@ -20,10 +20,13 @@
         <input type="text" placeholder="player two" id="playerTwoInput">
       </li>
     </ul>
-    <button id="submitNames">SUBMIT</button>
+    <button id="submitNames">START</button>
   </form>
   <div class="boardContainer">
     
+  </div>
+  <div hidden id="resetContainer">
+    <button class="resetGame">RESET</button>
   </div>
   <script src="scripts/main.js"></script>
 </body>
