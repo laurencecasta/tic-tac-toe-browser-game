@@ -17,19 +17,13 @@ const gameBoard = (() => {
 
 const toggleGameControlVisibility = (() => {
   document.getElementById('startStop').toggleAttribute('hidden');
-
   document.getElementById('resetContainer').toggleAttribute('hidden');
 });
 
 
-// Create form object
-const playerForm = (() => {
-  const startStop = document.forms['startStop'];// Retrieve form
-  startStop.addEventListener('submit', (e) => { // Create event listener for submit
-    e.preventDefault(); // Prevent automatic refresh
-    toggleGameControlVisibility();
-  });
-})();
+document.forms['startStop'].addEventListener('submit', (e) => { // Create event listener for submit
+  e.preventDefault(); // Prevent automatic refresh
+});
 
 // Create factory function for players
 const Player = (name) => {
@@ -82,7 +76,7 @@ const Winner = (board, marker) => {
 }
 
 // Create display controller to render gameBoard
-const game = ((boardAr, form) => { 
+const game = ((boardAr) => { 
   let playerCreated = false // Create boolean determining if any players are created
   let playerOneTurn = true; // Create boolean determining which player's turn it is
   let playerTwoTurn = false;
@@ -96,6 +90,7 @@ const game = ((boardAr, form) => {
   const start = document.querySelector('#submitNames') // Create event listener for start button
   start.addEventListener('click', (e) => {
     gameStarted = true;
+    toggleGameControlVisibility();
   });
 
   // Create DOM elements from gameBoard array
@@ -205,4 +200,4 @@ const game = ((boardAr, form) => {
     playerCreated,
     gameOver,
   };
-})(gameBoard.board, playerForm);
+})(gameBoard.board);
