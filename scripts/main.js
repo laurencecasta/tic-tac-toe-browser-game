@@ -15,15 +15,19 @@ const gameBoard = (() => {
   };
 })();
 
+const toggleGameControlVisibility = (() => {
+  document.getElementById('startStop').toggleAttribute('hidden');
+
+  document.getElementById('resetContainer').toggleAttribute('hidden');
+});
+
+
 // Create form object
 const playerForm = (() => {
   const startStop = document.forms['startStop'];// Retrieve form
-  let mainBtn = document.getElementById('submitNames'); // Retrieve button
-  let resetBtn = document.getElementById('resetContainer')// Retrieve reset button
   startStop.addEventListener('submit', (e) => { // Create event listener for submit
     e.preventDefault(); // Prevent automatic refresh
-    e.target.toggleAttribute('hidden'); // hide form
-    resetBtn.toggleAttribute('hidden'); // Reveal reset button
+    toggleGameControlVisibility();
   });
 })();
 
@@ -147,10 +151,8 @@ const game = ((boardAr, form) => {
   });
   container.appendChild(board); // Append table to container
 
-  // Add reset event listener
-  let resetBtn = document.getElementById('resetContainer'); // Retrieve reset button
-  resetBtn.addEventListener('click', (e) => { // Create event listener to reset game
-    boardAr.forEach(row => { // Empty out gameboard array
+  const resetGame = ((boardToReset) => {
+    boardToReset.forEach(row => { // Empty out gameboard array
       let placeIndex = 0;
       row.forEach(place => {
         row[placeIndex] = '';
@@ -181,6 +183,24 @@ const game = ((boardAr, form) => {
 
     if (!result.hasAttribute('hidden')) {result.toggleAttribute('hidden');}; // If game is over hide result node
   });
+
+  const quitMatch = ((boardToReset) => {
+    resetGame(boardToReset);
+    gameStarted = false;
+    toggleGameControlVisibility();
+  });
+
+  // Add reset event listener
+  let resetBtn = document.getElementById('resetGame'); // Retrieve reset button
+  resetBtn.addEventListener('click', (e) => { // Create event listener to reset game
+    resetGame(boardAr);
+  });
+
+  let quitMatchBtn = document.getElementById('quitMatch');
+  quitMatchBtn.addEventListener('click', (e) => {
+    quitMatch(boardAr);
+  });
+  
   return {
     playerCreated,
     gameOver,
