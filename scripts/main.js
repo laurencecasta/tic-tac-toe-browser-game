@@ -21,10 +21,6 @@ const toggleGameControlVisibility = (() => {
 });
 
 
-document.forms['startStop'].addEventListener('submit', (e) => { // Create event listener for submit
-  e.preventDefault(); // Prevent automatic refresh
-});
-
 // Create factory function for players
 const Player = (name) => {
   return {
