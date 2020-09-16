@@ -1,12 +1,15 @@
 // Create gameboard object
 const gameBoard = (() => {
-  let board = [];
-  for (let i = 0; i < 3; i++) {
-    board.push([]);
-    for (let j = 0; j < 3; j++) {
-      board[i].push('');
-    }
-  }
+  // if the gameboard size ever changed, these could be easily adjusted.
+  const numRows = 3;
+  const numCols = 3;
+  // I googled 'javascript initialize 2d array', first was StackOverflow question, and
+  // https://stackoverflow.com/a/52268285 was a good reply. The question was asked in
+  // 2013 and JS has gone through some big changes since then! This answer https://stackoverflow.com/a/53029734
+  // uses the ES6 'spread' operator, but I didn't feel it was as readable as this.
+  // :shrug:
+  let board = new Array(numRows).fill('').map(() => new Array(numCols).fill(''));
+
   return {
     board,
   };
