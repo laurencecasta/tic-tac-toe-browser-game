@@ -7,7 +7,7 @@ body {
   justify-content: center;
 }
 
-.boardContainer {
+#boardContainer {
   display: flex;
   justify-content: center;
 }

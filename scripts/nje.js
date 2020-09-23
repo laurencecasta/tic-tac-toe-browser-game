@@ -21,7 +21,7 @@ const ui = (() => {
     };
 
     const renderBoard = (boardSize, spotClickCallback) => {      
-      let boardContainer = document.querySelector('.boardContainer');
+      let boardContainer = document.getElementById('boardContainer');
       if (boardContainer.hasChildNodes) {
           boardContainer.removeChild(boardContainer.firstChild)
       }
@@ -34,22 +34,28 @@ const ui = (() => {
         board.appendChild(gameBoardRow);
         for (let currCol = 0; currCol < boardSize; currCol++) {
           let spot = document.createElement('td');
-          spot.setAttribute('data-index', squareNumber++)
+          spot.dataset.indexRow = currRow;
+          spot.dataset.indexCol = currCol;
           gameBoardRow.appendChild(spot);
           spot.addEventListener('click', (e) => {
-            let squareId = spot.getAttribute('data-index');
-            spotClickCallback(`spot clicked on ${squareId}`);
+            spotClickCallback(spot.dataset.indexRow, spot.dataset.indexCol);
           });      
         }
       }
     };
-  
+
+    const markSpot = (rowClicked, colClicked, markChar) => {
+        let td = document.querySelector(`td[data-index-row='${rowClicked}'][data-index-col='${colClicked}']`);
+        td.textContent = markChar;
+    };
+      
     return {
       // toggleControlVisibilty is not meant for public use, don't include
       toggleLobbyControlVisibility,
       toggleBoardGameVisibility,
       getLobbyPlayerName,
-      renderBoard
+      renderBoard,
+      markSpot
     };
 })();
 
@@ -76,16 +82,34 @@ const lobby = ((ui) => {
 })(ui);
 
 const board = ((ui) => {
-  let boardSize = 0;
-  let board = new Array(boardSize);
+  let pBoardSize = 0;
+  let pBoard = new Array(0);
+  let pPlayers = new Array(0);
+  let pCurrPlayerIx = 0;
 
-  const initialize = (boardSize) => {
-    boardSize = boardSize;
-    board = new Array(boardSize).fill('').map(() => new Array(boardSize).fill(''));
+  const initialize = (boardSize, players) => {
+    pBoardSize = boardSize;
+    pBoard = new Array(boardSize).fill('').map(() => new Array(boardSize).fill(''));
+    pPlayers = players;
+    pCurrPlayerIx = 0;
   };
 
-  const onSpotClick = (spotClicked) => {
-    alert(spotClicked);
+  const onSpotClick = (rowClicked, colClicked) => {
+    let currPlayer = pPlayers[pCurrPlayerIx];
+
+    if (Number.isInteger(pBoard[rowClicked][colClicked])) {
+      alert("can't move here, it's already claimed!");
+      return;
+    }
+    else {
+      pBoard[rowClicked][colClicked] = currPlayer.playerNum;
+      ui.markSpot(rowClicked, colClicked, currPlayer.moveChar);
+    }
+    //alert(`it is player ${currPlayer.playerNum} turn. Go ${currPlayer.name}!`);
+
+    // will increment current index, with a reset back to 0 (beginning of array) once it reaches 2 (end of array).
+    // Google 'modulo operator'.
+    pCurrPlayerIx = (pCurrPlayerIx + 1) % 2;
   };
   
   return {
@@ -103,8 +127,8 @@ const gameCoord = ((lobby, board, ui) => {
   };
 
   const onBeginMatch = () => {
-    board.initialize(3);
     let players = lobby.getPlayers();      
+    board.initialize(3, players);
     ui.renderBoard(3, board.onSpotClick);
     toggleBetweenLobbyAndBoardGame();
   };
