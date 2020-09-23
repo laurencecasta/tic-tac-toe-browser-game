@@ -23,14 +23,16 @@
 // })();
 
 const ui = (() => {
-  let toggleLobbyControlVisibility = () =>
-  {
-    document.getElementById('startStop').toggleAttribute('hidden');
+  const toggleControlVisibility = (id) => {
+    document.getElementById(id).toggleAttribute('hidden');
+  };
+  
+  const toggleLobbyControlVisibility = () => {
+    toggleControlVisibility("startStop");    
   };
 
-  let toggleBoardGameVisibility = () =>
-  {
-    document.getElementById('boardGameContainer').toggleAttribute('hidden');  
+  const toggleBoardGameVisibility = () => {
+    toggleControlVisibility("boardGameContainer");    
   };
 
   return {
@@ -40,16 +42,19 @@ const ui = (() => {
 })();
 
 const gameCoord = ((ui) => {
-  let beginMatch = () =>
-  {
+
+  const toggleBetweenLobbyAndBoardGame = () => {
     ui.toggleLobbyControlVisibility();
-    ui.toggleBoardGameVisibility();
+    ui.toggleBoardGameVisibility();  
   };
 
-  let quitMatch = () =>
+  const beginMatch = () => {
+      toggleBetweenLobbyAndBoardGame();
+  };
+
+  const quitMatch = () =>
   {
-    ui.toggleLobbyControlVisibility();
-    ui.toggleBoardGameVisibility();
+      toggleBetweenLobbyAndBoardGame();
   };
     
   return {
