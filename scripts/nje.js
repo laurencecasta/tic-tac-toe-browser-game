@@ -1,47 +1,56 @@
-// const LobbyPlayer = (playerNum, moveChar, inputId) => {
-//     let name = document.querySelector(`input[id="${inputId}"]`).value || 
-//                 document.querySelector(`input[id="${inputId}"]`).placeholder;
-//     return {
-//         playerNum, 
-//         name,
-//         moveChar
-//     }
-// };
-
-// const lobby = (() => {
-//   let getPlayers = () =>
-//   {
-//       let p1 = new LobbyPlayer(1, "X", "playerOneInput");
-//       let p2 = new LobbyPlayer(2, "O", "playerTwoInput");
-
-//       return [p1, p2];
-//   }
-// })();
-
-// const boardGame = (() => {
-
-// })();
-
+// abstract UI out of domain logic modules
+// if this were more complicated, we might need a ui module per logic module,
+// but a single shared module is OK for a small demo
 const ui = (() => {
-  const toggleControlVisibility = (id) => {
-    document.getElementById(id).toggleAttribute('hidden');
-  };
+    const toggleControlVisibility = (id) => {
+      document.getElementById(id).toggleAttribute('hidden');
+    };
+    
+    const toggleLobbyControlVisibility = () => {
+      toggleControlVisibility("startStop");    
+    };
   
-  const toggleLobbyControlVisibility = () => {
-    toggleControlVisibility("startStop");    
-  };
+    const toggleBoardGameVisibility = () => {
+      toggleControlVisibility("boardGameContainer");    
+    };
+  
+    const getLobbyPlayerName = (playerNumber) => {
+      const inputId = `player${playerNumber}Input`;
+      return document.querySelector(`input[id="${inputId}"]`).value || 
+                  document.querySelector(`input[id="${inputId}"]`).placeholder;
+    };
+  
+    return {
+        // toggleControlVisibilty is not meant for public use, don't include
+        toggleLobbyControlVisibility,
+        toggleBoardGameVisibility,
+        getLobbyPlayerName
+    };
+})();
 
-  const toggleBoardGameVisibility = () => {
-    toggleControlVisibility("boardGameContainer");    
+const lobby = ((ui) => {
+  const makePlayer = (playerNum, moveChar, name) => {
+    return {
+        playerNum, 
+        moveChar,
+        name,
+    };
+  };
+     
+  let getPlayers = () =>
+  {
+      let p1 = makePlayer(1, "X", ui.getLobbyPlayerName(1));
+      let p2 = makePlayer(2, "O", ui.getLobbyPlayerName(2));
+      return [p1, p2];
   };
 
   return {
-      toggleLobbyControlVisibility,
-      toggleBoardGameVisibility
+      // makePlayer not intended for public use, don't include
+      getPlayers
   }
-})();
+})(ui);
 
-const gameCoord = ((ui) => {
+const gameCoord = ((lobby, ui) => {
 
   const toggleBetweenLobbyAndBoardGame = () => {
     ui.toggleLobbyControlVisibility();
@@ -49,6 +58,8 @@ const gameCoord = ((ui) => {
   };
 
   const beginMatch = () => {
+      let players = lobby.getPlayers();
+      // set up board
       toggleBetweenLobbyAndBoardGame();
   };
 
@@ -58,13 +69,14 @@ const gameCoord = ((ui) => {
   };
     
   return {
+      // toggleBetweenLobbyAndBoardGame not meant for public use, don't include
       beginMatch,
       quitMatch
   };
-})(ui);
+})(lobby, ui);
 
 
-
+// wire up UI elements to game coordinator
 document.querySelector('#submitNames')
   .addEventListener('click', (e) => {
     gameCoord.beginMatch();
