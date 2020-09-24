@@ -9,25 +9,31 @@
 </head>
 <body>
   <h1>TIC-TAC-TOE</h1>
+  <h3 id="resultHeader" display='hidden'></h3>
   <form id="startStop">
     <ul>
       <li>
-        <label for="playerOneInput" id="pOneLabel">player one name:</label>
-        <input type="text" placeholder="player one" id="playerOneInput">
+        <label for="player1Input" id="p1Label">player one name:</label>
+        <input type="text" placeholder="player one" id="player1Input">
       </li>
       <li>
-        <label for="playerTwoInput" id="pTwoLabel">player two name:</label>
-        <input type="text" placeholder="player two" id="playerTwoInput">
+        <label for="player2Input" id="p1Label">player two name:</label>
+        <input type="text" placeholder="player two" id="player2Input">
       </li>
     </ul>
-    <button id="submitNames">START</button>
+    <button id="submitNames" type="button">START</button>
   </form>
-  <div class="boardContainer">
-    
+
+  <div hidden id="boardGameContainer">    
+    <div id="boardContainer">    
+    </div>    
+    <div id="resetContainer">
+      <button id="resetGame">RESET GAME</button>
+      &nbsp;
+      <button id="quitMatch">QUIT MATCH</button>
+    </div>      
   </div>
-  <div hidden id="resetContainer">
-    <button class="resetGame">RESET</button>
-  </div>
-  <script src="scripts/main.js"></script>
+
+  <script src="scripts/nje.js"></script>
 </body>
 </html>

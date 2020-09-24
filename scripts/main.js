@@ -1,28 +1,25 @@
 // Create gameboard object
 const gameBoard = (() => {
-  let board = [];
-  for (let i = 0; i < 3; i++) {
-    board.push([]);
-    for (let j = 0; j < 3; j++) {
-      board[i].push('');
-    }
-  }
+  // if the gameboard size ever changed, these could be easily adjusted.
+  const numRows = 3;
+  const numCols = 3;
+  // I googled 'javascript initialize 2d array', first was StackOverflow question, and
+  // https://stackoverflow.com/a/52268285 was a good reply. The question was asked in
+  // 2013 and JS has gone through some big changes since then! This answer https://stackoverflow.com/a/53029734
+  // uses the ES6 'spread' operator, but I didn't feel it was as readable as this.
+  // :shrug:
+  let board = new Array(numRows).fill('').map(() => new Array(numCols).fill(''));
+
   return {
     board,
   };
 })();
 
-// Create form object
-const playerForm = (() => {
-  const startStop = document.forms['startStop'];// Retrieve form
-  let mainBtn = document.getElementById('submitNames'); // Retrieve button
-  let resetBtn = document.getElementById('resetContainer')// Retrieve reset button
-  startStop.addEventListener('submit', (e) => { // Create event listener for submit
-    e.preventDefault(); // Prevent automatic refresh
-    e.target.toggleAttribute('hidden'); // hide form
-    resetBtn.toggleAttribute('hidden'); // Reveal reset button
-  });
-})();
+const toggleGameControlVisibility = (() => {
+  document.getElementById('startStop').toggleAttribute('hidden');
+  document.getElementById('resetContainer').toggleAttribute('hidden');
+});
+
 
 // Create factory function for players
 const Player = (name) => {
@@ -75,7 +72,7 @@ const Winner = (board, marker) => {
 }
 
 // Create display controller to render gameBoard
-const game = ((boardAr, form) => { 
+const game = ((boardAr) => { 
   let playerCreated = false // Create boolean determining if any players are created
   let playerOneTurn = true; // Create boolean determining which player's turn it is
   let playerTwoTurn = false;
@@ -89,6 +86,7 @@ const game = ((boardAr, form) => {
   const start = document.querySelector('#submitNames') // Create event listener for start button
   start.addEventListener('click', (e) => {
     gameStarted = true;
+    toggleGameControlVisibility();
   });
 
   // Create DOM elements from gameBoard array
@@ -144,10 +142,8 @@ const game = ((boardAr, form) => {
   });
   container.appendChild(board); // Append table to container
 
-  // Add reset event listener
-  let resetBtn = document.getElementById('resetContainer'); // Retrieve reset button
-  resetBtn.addEventListener('click', (e) => { // Create event listener to reset game
-    boardAr.forEach(row => { // Empty out gameboard array
+  const resetGame = ((boardToReset) => {
+    boardToReset.forEach(row => { // Empty out gameboard array
       let placeIndex = 0;
       row.forEach(place => {
         row[placeIndex] = '';
@@ -178,8 +174,26 @@ const game = ((boardAr, form) => {
 
     if (!result.hasAttribute('hidden')) {result.toggleAttribute('hidden');}; // If game is over hide result node
   });
+
+  const quitMatch = ((boardToReset) => {
+    resetGame(boardToReset);
+    gameStarted = false;
+    toggleGameControlVisibility();
+  });
+
+  // Add reset event listener
+  let resetBtn = document.getElementById('resetGame'); // Retrieve reset button
+  resetBtn.addEventListener('click', (e) => { // Create event listener to reset game
+    resetGame(boardAr);
+  });
+
+  let quitMatchBtn = document.getElementById('quitMatch');
+  quitMatchBtn.addEventListener('click', (e) => {
+    quitMatch(boardAr);
+  });
+  
   return {
     playerCreated,
     gameOver,
   };
-})(gameBoard.board, playerForm);
+})(gameBoard.board);

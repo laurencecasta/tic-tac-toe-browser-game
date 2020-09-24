@@ -7,7 +7,7 @@ body {
   justify-content: center;
 }
 
-.boardContainer {
+#boardContainer {
   display: flex;
   justify-content: center;
 }
@@ -131,7 +131,7 @@ table td.naught {
 #resetContainer[hidden] {
   display: none;
 }
-#resetContainer .resetGame {
+#resetContainer > button {
   font-family: "Inter", sans-serif;
   font-size: 20px;
   border: 0;
@@ -140,13 +140,13 @@ table td.naught {
   padding: 10px;
   border-radius: 5px;
 }
-#resetContainer .resetGame:focus {
+#resetContainer > button:focus {
   outline: none;
 }
-#resetContainer .resetGame:active {
+#resetContainer > button:active {
   border: none;
 }
-#resetContainer .resetGame:hover {
+#resetContainer > button:hover {
   cursor: pointer;
   transform: scale(1.1);
   transition-duration: 0.2s;
